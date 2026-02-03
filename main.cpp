@@ -1,12 +1,12 @@
 #include <cstring>
 #include <iostream>
-#include <fstream>
 #include <filesystem>
 #include <string>
 
-int outputLineFromFile(std::string &fileName, std::string &readString) ;
+#include "recursiveCall.h"
+#include "outputLineFromFile.h"
 
-bool containsSubstring(std::string& line, std::string& substring) ;
+namespace fs = std::filesystem;
 
 int main(int argc, char **argv){
 
@@ -16,6 +16,10 @@ int main(int argc, char **argv){
 
     int currArg = 1;
     
+    if(argc == 1){
+        std::cout << "no arguments provided" << std::endl;
+        return 0;
+    }
 
     while(currArg < argc){
         if((std::strcmp(*(argv + currArg), "-r")) == 0){
@@ -32,41 +36,19 @@ int main(int argc, char **argv){
         currArg++;
         continue;
     }
-    std::string fileName = *(argv + fileNameIndex);
-    std::string stringRead = *(argv + stringIndex);
-
-    int errCode = outputLineFromFile(fileName, stringRead);
-    if(errCode == -1){
-        std::cout << "failed to read file " << fileName << std::endl;
-    }
-    
-}
-
-int outputLineFromFile(std::string &fileName, std::string &readString){
-    std::ifstream file(fileName);
-    if(!file){
-        return 1;
-    }
-    
-    std::string line;
-    int lineNum = 0;
-
-    while(std::getline(file, line)){
-        if(containsSubstring(line, readString)){
-            std::cout << fileName << " at line " << lineNum << ": " << line << std::endl;
+    fs::path path = fs::path(*(argv + fileNameIndex));
+        std::string stringRead = *(argv + stringIndex);
+    if(isRecursive){
+        if(handleRecursiveCall(path, stringRead) == -1){
+            std::cout << "failed to handle recursive call on " << path << std::endl;            
         }
-        lineNum++;
     }
-
-    return 0;
-}
-
-bool containsSubstring(std::string& line, std::string& substring){
-    auto index = line.find(substring);
-    if(index == std::string::npos){
-        return false;
+    else{
+        if(outputLineFromFile(path, stringRead) == -1){
+            std::cout << "failed to read file " << path << std::endl;
+        }
     }
-    return true;
+    
 }
 
 
