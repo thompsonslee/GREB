@@ -5,12 +5,14 @@
 
 #include "recursiveCall.h"
 #include "outputLineFromFile.h"
+#include "handleArgs.h"
 
 namespace fs = std::filesystem;
 
-int main(int argc, char **argv){
+bool isRecursive = false;
+bool displayLineNums = false;
 
-    bool isRecursive = false;
+int main(int argc, char **argv){
     int stringIndex = -1;
     int fileNameIndex = -1;
 
@@ -20,13 +22,14 @@ int main(int argc, char **argv){
         std::cout << "no arguments provided" << std::endl;
         return 0;
     }
-
+    char *flags = ((*argv) + 1);
+    if(flags[0] == '-'){
+        handleArgs(flags);
+        currArg++;
+    }
+    
     while(currArg < argc){
-        if((std::strcmp(*(argv + currArg), "-r")) == 0){
-            isRecursive = true;
-            currArg++;
-            continue;
-        }
+        
         if(fileNameIndex == -1){
             fileNameIndex = currArg;
         }
@@ -50,6 +53,8 @@ int main(int argc, char **argv){
     }
     
 }
+
+
 
 
 
