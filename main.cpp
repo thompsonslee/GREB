@@ -22,7 +22,8 @@ int main(int argc, char **argv){
         std::cout << "no arguments provided" << std::endl;
         return 0;
     }
-    char *flags = ((*argv) + 1);
+    
+    char *flags = *(argv + 1);
     if(flags[0] == '-'){
         handleArgs(flags);
         currArg++;
@@ -33,12 +34,14 @@ int main(int argc, char **argv){
         if(fileNameIndex == -1){
             fileNameIndex = currArg;
         }
+
         else{
             stringIndex = currArg;
         }
         currArg++;
         continue;
     }
+
     fs::path path = fs::path(*(argv + fileNameIndex));
         std::string stringRead = *(argv + stringIndex);
     if(isRecursive){
