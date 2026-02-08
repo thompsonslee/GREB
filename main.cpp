@@ -1,3 +1,4 @@
+#include <chrono>
 #include <cstring>
 #include <iostream>
 #include <filesystem>
@@ -11,6 +12,9 @@ namespace fs = std::filesystem;
 
 bool isRecursive = false;
 bool displayLineNums = false;
+bool displayTime = false;
+
+const std::string instructions = "usage: greb -[nrt] [file/directory] [string]";
 
 int main(int argc, char **argv){
     int stringIndex = -1;
@@ -19,7 +23,7 @@ int main(int argc, char **argv){
     int currArg = 1;
     
     if(argc == 1){
-        std::cout << "no arguments provided" << std::endl;
+        std::cout << instructions << std::endl;
         return 0;
     }
     
@@ -30,7 +34,6 @@ int main(int argc, char **argv){
     }
     
     while(currArg < argc){
-        
         if(fileNameIndex == -1){
             fileNameIndex = currArg;
         }
@@ -40,6 +43,15 @@ int main(int argc, char **argv){
         }
         currArg++;
         continue;
+    }
+    if(fileNameIndex == -1 || stringIndex == -1){
+        std::cout << instructions << std::endl;
+        return 0;
+    }
+    std::chrono::time_point<std::chrono::high_resolution_clock> start;
+
+    if(displayTime){
+        start = std::chrono::high_resolution_clock::now();
     }
 
     fs::path path = fs::path(*(argv + fileNameIndex));
@@ -53,6 +65,12 @@ int main(int argc, char **argv){
         if(outputLineFromFile(path, stringRead) == -1){
             std::cout << "failed to read file " << path << std::endl;
         }
+    }
+    if(displayTime){
+        auto end = std::chrono::high_resolution_clock::now();
+        
+        const std::chrono::duration<double> duration = end - start;
+        std::cout << "finished in " << duration.count() << " seconds" << std::endl;
     }
     
 }
