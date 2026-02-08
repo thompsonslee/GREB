@@ -1,3 +1,3 @@
 #!/bin/zsh
-g++ -std=c++17 main.cpp outputLineFromFile.cpp recursiveCall.cpp -o GREB 
+g++ -std=c++17 *.cpp -o bin/GREB 
 
