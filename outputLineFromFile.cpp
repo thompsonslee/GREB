@@ -3,7 +3,7 @@
 extern bool displayLineNums;
 
 int outputLineFromFile(fs::path &filePath, std::string &readString){
-    
+
     std::ifstream file(filePath);
     if(!file){
         return 1;
@@ -22,15 +22,22 @@ int outputLineFromFile(fs::path &filePath, std::string &readString){
     return 0;
 }
 
-bool containsSubstring(std::string& line, std::string& substring){
+
+inline bool containsSubstring2(std::string& line, std::string& substring){
+
+    return false;
+}
+
+inline bool containsSubstring(std::string& line, std::string& substring){
     auto index = line.find(substring);
+    //std::cout << index << std::endl;
     if(index == std::string::npos){
         return false;
     }
     return true;
 }
 
-void outputLine(std::string &line, fs::path &filePath, int lineNum){
+inline void outputLine(std::string &line, fs::path &filePath, int lineNum){
      
     std::cout << filePath;
     if(displayLineNums){

@@ -14,8 +14,7 @@ bool isRecursive = false;
 bool displayLineNums = false;
 bool displayTime = false;
 
-const std::string instructions = "usage: greb -[nrt] [file/directory] [string]";
-
+const std::string instructions = "usage: greb -[nrt] [string] [file/directory]";
 int main(int argc, char **argv){
     int stringIndex = -1;
     int fileNameIndex = -1;
@@ -34,13 +33,14 @@ int main(int argc, char **argv){
     }
     
     while(currArg < argc){
-        if(fileNameIndex == -1){
+
+        if(stringIndex == -1){
+            stringIndex = currArg;
+        }
+        else{
             fileNameIndex = currArg;
         }
 
-        else{
-            stringIndex = currArg;
-        }
         currArg++;
         continue;
     }

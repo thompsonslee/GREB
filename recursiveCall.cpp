@@ -20,6 +20,7 @@ int handleRecursiveCall(fs::path &pathStr, std::string& substring){
     fs::recursive_directory_iterator dirs(path);
 
     for(const fs::directory_entry &p : fs::recursive_directory_iterator(path)){
+        std::cout << p << std::endl;
         if(!p.is_regular_file()){
             continue;
         }
