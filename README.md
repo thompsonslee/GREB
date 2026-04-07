@@ -8,7 +8,7 @@ Portable - Greb has no external dependencies and is a single binary
 
 
 # Installation
-git clone https://github.com/thompsonslee/GREB\
+git clone https://github.com/thompsonslee/GREB \
 cd GREB && sudo ./build.sh
 
 # Instructions
