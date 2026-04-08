@@ -12,9 +12,9 @@ git clone https://github.com/thompsonslee/GREB \
 cd GREB && sudo ./build.sh
 
 # Instructions
-The standard format for greb is: grep [options][string][file_path]
+The standard format for greb is: greb [options][string][file_path]
 
-You can modify grep's behaviour by using these flags\
+You can modify greb's behaviour by using these flags\
 -r: Recursive search(search through all files in a subdirectory)\
 -n: Show line numbers alongside matches\
 -t: Display the time it took for the command to finish\
